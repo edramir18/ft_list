@@ -104,7 +104,7 @@ requerido por la siguienete funcion
 void	ft_lstdelone(t_list *lst, void (*del)(void *));
 ```
 
-### Extracto de codigo para inicializar y agregar un nuevo nodo
+### Extracto de codigo para eliminar un nodo.
 ``` c
 t_user	*user;
 t_list	*node;
@@ -116,6 +116,27 @@ user->last_name = ft_strdup("Ramirez");
 node = ft_lstnew(user);
 ft_lstdelone(node, ft_delete_user);
 ```
+
+Como puede verse en el codigo precedente no se necesita acceso a la lista, para
+realizar esta operacion ya que solo se trata de liberar el contenido del nodo.
+Para eliminar de la lista se utilizan otros metodos y funciones que veremos a 
+continuacion.
+
+## Borrar una lista
+
+Para eliminar todos los elementos de una lista de manera segura y confiable
+haremos uso de la funcion *ft_lstclear*, la cual se encargarra de iterar por
+cada uno de nodos de la lista e invocara la funcion que le pasemos como
+segundo argumento, liberando la reserva del nodo y colocando a **NULL** el
+contenido de la lista
+
+
+``` c
+void	ft_lstclear(t_list **lst, void (*del)(void *));
+```
+
+> El archivo *delete.c* contiene un ejemplo mas completo de todas las funciones
+descritas hasta ahora.
 
 ``` c
 ```
