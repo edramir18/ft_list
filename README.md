@@ -124,13 +124,12 @@ ft_lstdelone(node, ft_delete_user);
 
 Como puede verse en el codigo precedente no se necesita acceso a la lista, para
 realizar esta operacion ya que solo se trata de liberar el contenido del nodo.
-Para eliminar de la lista se utilizan otros metodos y funciones que veremos a 
-continuacion.
+Para eliminar de la lista se utilizan otra funcion que veremos a continuacion.
 
 ## Borrar una lista
 
 Para eliminar todos los elementos de una lista de manera segura y confiable
-haremos uso de la funcion *ft_lstclear*, la cual se encargarra de iterar por
+haremos uso de la funcion *ft_lstclear*, la cual se encargara de iterar por
 cada uno de nodos de la lista e invocara la funcion que le pasemos como
 segundo argumento, liberando la reserva del nodo y colocando a **NULL** el
 contenido de la lista
@@ -186,9 +185,9 @@ void	ft_print_content(t_list *list)
 ### Utilizando la funcion ft_lstiter
 
 El proyecto libft nos recomienda implementar una funcion que nos permite iterar
-uno a uno a los elementos de la lista, necesitando como primer parametro un
+uno a uno los elementos de la lista, necesitando como primer parametro un
 puntero a la lista que nos interesa recorrer y como segundo parametro una
-funcion que reciba un parametro sin tipo *(void *)*, para ejecutar la operacion
+funcion que recibe un parametro sin tipo *(void *)*, para ejecutar la operacion
 que nos interesa en cada elemento de la lista.
 
 ``` c
@@ -237,7 +236,7 @@ void	*ft_pow_number(void *data)
 
 	nb = *((int *) data);
 	pw = malloc(sizeof(long));
-	if (long == NULL)
+	if (pw == NULL)
 		return (NULL);
 	*((long int *)pw) = nb * nb;
 	return (pw);
