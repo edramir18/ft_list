@@ -3,7 +3,7 @@
 Las listas son una estructura de datos que nos permite almacenar una coleccion 
 de elementos, sin conocer previamente el numero total de ellos.
 Se recomienda cuando es necesario trabajar con un conjunto de elementos a los 
-cuales estamos añadiendo y elementos de forma continua.
+cuales estamos añadiendo y eliminando elementos de forma continua.
 La estructura que nos permitira trabajar con la lista seria la siguiente:
 ``` c
 typedef struct	s_list
@@ -13,12 +13,12 @@ typedef struct	s_list
 }				t_list;
 ```
 La estructura contiene 2 apuntadores (*pointer*), uno para indicar el siguiente 
-elemento de la lista: *next*, y el otro es un apuntador sin tipo, que nos 
-permitira almacenar cualquier elemento en esta lista sin necesidad de redefinir 
-el tipo de la variable.
-A cada elemento de una lista se le suele denominar nodo, para indicar que es una
-estructura de datos que contiene la informacion necesaria para trabajar con las
-distintas funciones de listas.
+elemento de la lista: *next*, y el otro es un apuntador sin tipo *(void *)*, que
+nos permitira almacenar cualquier elemento en esta lista sin necesidad de
+redefinir el tipo de la variable utilizada.
+A cada elemento de una lista se le suele denominar **node**, para indicar que es
+una estructura de datos que contiene la informacion necesaria para trabajar con
+las distintas funciones de listas.
 
 ## Inicializacion
 
@@ -42,10 +42,10 @@ almacenar. El prototipo de la funcion seria el siguiente:
 t_list	*ft_lstnew(void *content);
 ```
 
-Al tener el nodo con la informacion requerida, procedemos a agregarlo a la lista
-con cualquiera de estas funciones: **ft_lstadd_front** para agregar elementos al
-inicio de la lista y **ft_lstadd_back** para agregar elementos al final de la
-lista.
+Una vez tenemos el nodo con la informacion requerida, procedemos a agregarlo a
+la lista con cualquiera de estas funciones: **ft_lstadd_front** para agregar
+elementos al inicio de la lista y **ft_lstadd_back** para agregar elementos al
+final de la lista.
 
 
 ``` c
@@ -72,7 +72,7 @@ valor valido, y en caso de error tratarlo de manera adecuada.
 ## Borrado de un elemento de la lista.
 Para eliminar un nodo de la lista debemos proveer una funcion que sea capaz de
 liberar de manera adecuada todas las reservas de memoria utilizadas por el
-apuntador *data*.
+apuntador *content*.
 
 Teniendo la siguiente estructura y funcion de borrado
 
@@ -93,11 +93,11 @@ void	ft_delete_user(void *data)
 }
 ```
 
-Al momento de liberar una reserva de este tipo de datos podemos invocar la
+Al momento de liberar una nodo con este tipo de datos podemos invocar la
 funcion *ft_lstdelone* para realizar la accion de limpieza. Esto nos permite
 ahorrarnos trabajo y concentrar nuestro esfuerzo en el caso que nos interese
 resolver.
-La funcion de limpieza utiliza un apuntador de tipo void, debido a que es
+La funcion de limpieza utiliza un apuntador de tipo *void*, debido a que es
 requerido por la siguienete funcion
 
 ``` c
@@ -110,7 +110,6 @@ t_user	*user;
 t_list	*node;
 
 user = malloc(sizeof(t_user));
-list = NULL;
 user->first_name = ft_strdup("Eduardo");
 user->last_name = ft_strdup("Ramirez");
 node = ft_lstnew(user);
