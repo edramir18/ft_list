@@ -20,6 +20,12 @@ A cada elemento de una lista se le suele denominar **node**, para indicar que es
 una estructura de datos que contiene la informacion necesaria para trabajar con
 las distintas funciones de listas.
 
+>Disclaimer: Motivado a que la implementacion de las funciones descritas en este
+en los siguientes apartados, son asignaciones de la academedia **PERSONALMENTE**
+no considero adecuardo incluirlas en este proyecto, sera necesaria la
+implementacion propia a fin de verificar los ejemplos descritos en este
+proyecto.
+
 ## Inicializacion
 
 Para el manejo de la lista utilizaremos un apuntador de tipo *t_list*, el cual 
@@ -65,7 +71,7 @@ node = ft_lstnew(data);
 ft_lstadd_front(&list, node);
 ```
 
-**NOTA:** Se omite la verificacion del retorno de las funciones para simplicar
+>**NOTA:** Se omite la verificacion del retorno de las funciones para simplicar
 el ejemplo, siempre se debe verificar que los valores devueltos contengan algun 
 valor valido, y en caso de error tratarlo de manera adecuada.
 
@@ -105,6 +111,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 ```
 
 ### Extracto de codigo para eliminar un nodo.
+
 ``` c
 t_user	*user;
 t_list	*node;
@@ -129,13 +136,28 @@ cada uno de nodos de la lista e invocara la funcion que le pasemos como
 segundo argumento, liberando la reserva del nodo y colocando a **NULL** el
 contenido de la lista
 
-
 ``` c
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 ```
 
 > El archivo *delete.c* contiene un ejemplo mas completo de todas las funciones
 descritas hasta ahora.
+
+## Longitud de la lista
+
+Cuando estamos trabajando con lista es necesario conocer el numero de elementos
+que componen la lista en un momento determinado, por lo cual utilizaremos una
+funcion que se encarga de iterar por toda la lista y contar el numero de nodos
+que contiene. El unico parametro que requiere es el apuntador al inicio de la
+lista.
+
+>Debido a como interactuamos con la lista realmente podemos pasar como parametro
+cualquier elemento de la lista y desde esa posicion determinar cuantos elementos
+existen desde alli.
+
+``` c
+int		ft_lstsize(t_list *lst);
+```
 
 ``` c
 ```
