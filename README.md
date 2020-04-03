@@ -20,11 +20,10 @@ A cada elemento de una lista se le suele denominar **node**, para indicar que es
 una estructura de datos que contiene la informacion necesaria para trabajar con
 las distintas funciones de listas.
 
->Disclaimer: Motivado a que la implementacion de las funciones descritas en este
-en los siguientes apartados, son asignaciones de la academedia **PERSONALMENTE**
-no considero adecuardo incluirlas en este proyecto, sera necesaria la
-implementacion propia a fin de verificar los ejemplos descritos en este
-proyecto.
+>**DISCLAIMER**: La implementacion de las funciones descritas en las siguientes
+secciones, son asignaciones de la academedia y **PERSONALMENTE** no considero
+adecuardo incluir mi implementacion en este proyecto. Se recomienda el uso de la
+libreria **libft** a fin de verificar los ejemplos descritos en este proyecto.
 
 ## Inicializacion
 
@@ -151,12 +150,64 @@ funcion que se encarga de iterar por toda la lista y contar el numero de nodos
 que contiene. El unico parametro que requiere es el apuntador al inicio de la
 lista.
 
+``` c
+int		ft_lstsize(t_list *lst);
+```
+
 >Debido a como interactuamos con la lista realmente podemos pasar como parametro
 cualquier elemento de la lista y desde esa posicion determinar cuantos elementos
 existen desde alli.
 
+## Iteracion de una lista
+
+Al momento de trabajar con una lista existen dos modos de recorrerla y obtener
+cada elemento a fin de ejecutar alguna operacion con cada uno de ellos.
+
+### Utilizando un bucle While
+
+Este es la manera mas sencilla y facil de manejar, dependiendo si nos interesa
+conservar el apuntador a la posicion inicial o no, podemos hacer uso de una 
+variable auxiliar para realizar la iteracion
+
 ``` c
-int		ft_lstsize(t_list *lst);
+void	ft_print_content(t_list *list)
+{
+	t_list	*aux;
+
+	aux = list;
+	while (aux != NULL)
+	{
+		printf("%d\s", *((int *)aux->content));
+		aux = aux->next;
+	}
+	printf("The list has %d element\n", ft_lstsize(list));
+}
+```
+### Utilizando la funcion ft_lstiter
+
+El proyecto libft nos recomienda implementar una funcion que nos permite iterar
+uno a uno a los elementos de la lista, necesitando como primer parametro un
+puntero a la lista que nos interesa recorrer y como segundo parametro una
+funcion que reciba un parametro sin tipo *(void *)*, para ejecutar la operacion
+que nos interesa en cada elemento de la lista.
+
+``` c
+void	ft_lstiter(t_list *lst, void (*f)(void *));
+```
+
+#### Extracto de codigo que utiliza la funcion ft_lstiter
+``` c
+void	ft_print_number(void *data)
+{
+	int		*number;
+
+	number = (int *)data;
+	printf("%d\n", number);
+}
+
+> Dentro de la funcion donde estemos usando la lista hacemos el llamado
+
+ft_lstiter(list, ft_print_number);
 ```
 
 ``` c
