@@ -177,7 +177,7 @@ void	ft_print_content(t_list *list)
 	aux = list;
 	while (aux != NULL)
 	{
-		printf("%d\s", *((int *)aux->content));
+		printf("%d\n", *((int *)aux->content));
 		aux = aux->next;
 	}
 	printf("The list has %d element\n", ft_lstsize(list));
@@ -210,5 +210,42 @@ void	ft_print_number(void *data)
 ft_lstiter(list, ft_print_number);
 ```
 
+## Duplicar una lista
+
+En algunas ocasiones nos interesa generar una lista a partir de otra, o aplicar
+alguna operacion en cada elemento de la lista y generar una lista con los
+resultados de esa operacion. En estos casos usamos la siguiente funcion:
+
 ``` c
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 ```
+Esta funcion utiliza tres parametros y retorna un apuntador a la nueva lista,
+el primer parametro es el apuntador a la lista; el segundo parametro la funcion
+que deseamos aplicar para obtener un nuevo elemento de la lista; y el ultimo
+parametro es un funcion de borrado para los nuevos elementos de la lista.
+
+Es importar aclarar que el contenido que tendra la lista nueva no tiene que ser
+del mismo tipo que la lista original, dependera de nuestra funcion **f** el tipo
+de dato que retornemos y almacenemos en la lista nueva.
+
+###
+``` c
+void	*ft_pow_number(void *data)
+{
+	int		nb;
+	void	*pw;
+
+	nb = *((int *) data);
+	pw = malloc(sizeof(long));
+	if (long == NULL)
+		return (NULL);
+	*((long int *)pw) = nb * nb;
+	return (pw);
+}
+
+> En la funcion que nos interesa la lista nueva
+lstnew = ft_lstmap(lst, ft_pow_number, free);
+```
+
+> En el archivo iterar.c podremos observar un ejemplo mas extenso de las
+funciones descritas hasta ahora.
