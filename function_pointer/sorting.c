@@ -6,7 +6,7 @@
 /*   By: edramire <edramire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 11:56:34 by edramire          #+#    #+#             */
-/*   Updated: 2020/04/07 13:06:17 by edramire         ###   ########.fr       */
+/*   Updated: 2020/04/08 00:44:39 by edramire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,7 @@ int		main(void)
 	printf("Arreglos ordenados: \n");
 	ft_print_int(n, arr_int);
 	ft_print_long(n, arr_long);
+	free(arr_int);
+	free(arr_long);
 	return (0);
 }
