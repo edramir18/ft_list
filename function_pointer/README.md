@@ -37,7 +37,7 @@ int     main(void)
     ft_print_result(4, 5, ft_add_int);
 }
 ```
-> Ver archivo operadores.c para el codigo completo.
+> Ver archivo **operadores.c** para el codigo completo.
 
 En la funcion *ft_print_result* hemos utilizado la declaracion de una funcion
 que retorna un entero y recibe dos argumentos de tipo entero. La sintaxis
@@ -75,7 +75,7 @@ int     main(void)
 }
 ```
 
-> Ver archivo operadores.c para el codigo completo.
+> Ver archivo **operadores.c** para el codigo completo.
 
 Al utilizar un apuntador de funcion como argumento para la funcion 
 *ft_print_result* hemos podido reutilizarla sin necesidad de realizar ningun
@@ -100,7 +100,12 @@ datos. Debido a que no podemos movernos sin conocer el tipo de datos en un
 arreglo *(void *)* debemos proporcionar el tamaño en bytes del tipo de datos que
 estemos utilizando como ultimo argumento a la funcion.
 
-Al momento de ordenar los datos podemos realizar el 
+Al momento de ordenar los datos podemos realizar el siguiente llamado desde la
+funcion *main* 
 ``` c
-
+ft_sort(n, arr_int, ft_cmp_int, sizeof(int));
+ft_sort(n, arr_long, ft_cmp_long, sizeof(long int));
 ```
+
+> El archivo **sorting.c** contiene todo el codigo para ver el funcionamiento de
+las caracteristicas descritas hasta ahora
