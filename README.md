@@ -6,11 +6,11 @@ Se recomienda cuando es necesario trabajar con un conjunto de elementos a los
 cuales estamos añadiendo y eliminando elementos de forma continua.
 La estructura que nos permitira trabajar con la lista seria la siguiente:
 ``` c
-typedef struct	s_list
+typedef struct  s_list
 {
-	void			*content;
-	struct s_list	*next;
-}				t_list;
+    void            *content;
+    struct s_list   *next;
+}               t_list;
 ```
 La estructura contiene 2 apuntadores (*pointer*), uno para indicar el siguiente 
 elemento de la lista: *next*, y el otro es un apuntador sin tipo *(void *)*, que
@@ -32,7 +32,7 @@ debe ser inicializado en **NULL**. No es necesario reservar memoria con *malloc*
 o crear una estructura adicional para manejar la lista
 
 ``` c
-t_list	*list;
+t_list  *list;
 
 list = NULL;
 ```
@@ -44,7 +44,7 @@ de la funcion *ft_lstnew*, a la cual pasaremos un apuntador al dato que deseamos
 almacenar. El prototipo de la funcion seria el siguiente:
 
 ``` c
-t_list	*ft_lstnew(void *content);
+t_list  *ft_lstnew(void *content);
 ```
 
 Una vez tenemos el nodo con la informacion requerida, procedemos a agregarlo a
@@ -54,15 +54,15 @@ final de la lista.
 
 
 ``` c
-void	ft_lstadd_front(t_list **alist, t_list *newc);
-void	ft_lstadd_back(t_list **alst, t_list *newc);
+void    ft_lstadd_front(t_list **alist, t_list *newc);
+void    ft_lstadd_back(t_list **alst, t_list *newc);
 ```
 
 ### Extracto de codigo para inicializar y agregar un nuevo nodo
 ``` c
-char	*data;
-t_list	*list;
-t_list	*node;
+char    *data;
+t_list  *list;
+t_list  *node;
 
 data = strdup("Hello World");
 list = NULL;
@@ -82,19 +82,19 @@ apuntador *content*.
 Teniendo la siguiente estructura y funcion de borrado
 
 ``` c
-typedef struct	s_user
+typedef struct  s_user
 {
-	char	*first_name;
-	char	*last_name;
-}				t_user;
+    char    *first_name;
+    char    *last_name;
+}               t_user;
 
-void	ft_delete_user(void *data)
+void    ft_delete_user(void *data)
 {
-	t_user	*user;
-	user = (t_user *)data;
-	free(user->first_name);
-	free(user->last_name);
-	free(user);
+    t_user	*user;
+    user = (t_user *)data;
+    free(user->first_name);
+    free(user->last_name);
+    free(user);
 }
 ```
 
@@ -106,7 +106,7 @@ La funcion de limpieza utiliza un apuntador de tipo *void*, debido a que es
 requerido por la siguienete funcion
 
 ``` c
-void	ft_lstdelone(t_list *lst, void (*del)(void *));
+void    ft_lstdelone(t_list *lst, void (*del)(void *));
 ```
 
 ### Extracto de codigo para eliminar un nodo.
@@ -126,6 +126,68 @@ Como puede verse en el codigo precedente no se necesita acceso a la lista, para
 realizar esta operacion ya que solo se trata de liberar el contenido del nodo.
 Para eliminar de la lista se utilizan otra funcion que veremos a continuacion.
 
+### Eliminar nodos en una lista.
+
+La funcion precedente es util para asegurarnos que eliminamos adecuadamente un
+nodo que aun no ha sido agregado a una lista o ya no es parte de la lista.
+Cuando queremos eliminar un nodo perteneciente a una lista debemos peocuparnos
+por eliminar la referencias utilizados en otro nodos, y ajustar la lista de 
+acuerdo a los nuevos elementos.
+
+Pongamos por ejemplo la funcion *ft_lstdel_front*, la cual se encargara de
+borrar el primer nodo de la lista y ajustar los apuntadores de modo que la lista
+siga siendo funncional.
+
+``` c
+void    ft_lstdel_front(t_list **list, void del(void *))
+{
+    t_list  *node;
+
+    if (list == NULL || *list == NULL)
+        return ;
+    node = *list;
+    *list = (*list)->next;
+    ft_lstdelone(node, del);
+}
+```
+
+### Buscar y eliminar un nodo
+
+Cuando necesitamos eliminar un nodo de la lista, y este no se encuentra en la
+posicion inicial o final de la lista, necesitamos de un mecanismo para
+identificar cual es el nodo en cuestion y luego ajustar los demas nodos para
+que la lista siga operativa.
+
+La siguiente funcion nos permite eliminar el primer elemento que coincida con un
+criterio de busqueda.
+
+``` c
+void    ft_lstdel_one(t_list **list, void *data, int cmp(void *, void*), void del(void *))
+{
+    t_list  *node;
+    t_list  *prev;
+
+    prev = NULL;
+    if (list == NULL || *list == NULL)
+        return ;
+    node = *list;
+    while (node != NULL)
+    {
+        if (cmp(data, node->content) == 0)
+        {
+            if (prev == NULL)
+                *list = node->next;
+            else
+                prev->next = node->next;
+            ft_lstdelone(node, del);
+            break;
+        }
+        prev = node;
+        node = node->next;
+    }
+}
+```
+
 ## Borrar una lista
 
 Para eliminar todos los elementos de una lista de manera segura y confiable
@@ -135,7 +197,7 @@ segundo argumento, liberando la reserva del nodo y colocando a **NULL** el
 contenido de la lista
 
 ``` c
-void	ft_lstclear(t_list **lst, void (*del)(void *));
+void    ft_lstclear(t_list **lst, void (*del)(void *));
 ```
 
 > El archivo *delete.c* contiene un ejemplo mas completo de todas las funciones
@@ -150,7 +212,7 @@ que contiene. El unico parametro que requiere es el apuntador al inicio de la
 lista.
 
 ``` c
-int		ft_lstsize(t_list *lst);
+int     ft_lstsize(t_list *lst);
 ```
 
 >Debido a como interactuamos con la lista realmente podemos pasar como parametro
@@ -169,17 +231,17 @@ conservar el apuntador a la posicion inicial o no, podemos hacer uso de una
 variable auxiliar para realizar la iteracion
 
 ``` c
-void	ft_print_content(t_list *list)
+void    ft_print_content(t_list *list)
 {
-	t_list	*aux;
+    t_list  *aux;
 
-	aux = list;
-	while (aux != NULL)
-	{
-		printf("%d\n", *((int *)aux->content));
-		aux = aux->next;
-	}
-	printf("The list has %d element\n", ft_lstsize(list));
+    aux = list;
+    while (aux != NULL)
+    {
+        printf("%d\n", *((int *)aux->content));
+        aux = aux->next;
+    }
+    printf("The list has %d element\n", ft_lstsize(list));
 }
 ```
 ### Utilizando la funcion ft_lstiter
@@ -198,10 +260,10 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 ``` c
 void	ft_print_number(void *data)
 {
-	int		*number;
+    int     *number;
 
-	number = (int *)data;
-	printf("%d\n", number);
+    number = (int *)data;
+    printf("%d\n", number);
 }
 
 > Dentro de la funcion donde estemos usando la lista hacemos el llamado
@@ -229,17 +291,17 @@ de dato que retornemos y almacenemos en la lista nueva.
 
 ###
 ``` c
-void	*ft_pow_number(void *data)
+void    *ft_pow_number(void *data)
 {
-	int		nb;
-	void	*pw;
+    int     nb;
+    void    *pw;
 
-	nb = *((int *) data);
-	pw = malloc(sizeof(long));
-	if (pw == NULL)
-		return (NULL);
-	*((long int *)pw) = nb * nb;
-	return (pw);
+    nb = *((int *) data);
+    pw = malloc(sizeof(long));
+    if (pw == NULL)
+        return (NULL);
+    *((long int *)pw) = nb * nb;
+    return (pw);
 }
 
 > En la funcion que nos interesa la lista nueva
