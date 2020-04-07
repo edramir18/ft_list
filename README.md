@@ -21,7 +21,7 @@ una estructura de datos que contiene la informacion necesaria para trabajar con
 las distintas funciones de listas.
 
 >**DISCLAIMER**: La implementacion de las funciones descritas en las siguientes
-secciones, son asignaciones de la academedia y **PERSONALMENTE** no considero
+secciones, son asignaciones de la academia y **PERSONALMENTE** no considero
 adecuardo incluir mi implementacion en este proyecto. Se recomienda el uso de la
 libreria **libft** a fin de verificar los ejemplos descritos en este proyecto.
 
